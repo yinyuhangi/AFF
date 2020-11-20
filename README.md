@@ -1,6 +1,8 @@
 # [Attentional Feature Fusion](https://arxiv.org/abs/2009.14082)
 #### Accepted by WACV 2021，收录到[PytorchNetHub](https://github.com/bobo0810/PytorchNetHub)
 
+简体中文 | [English](README_ENG.md)
+
 ## 作用
 - 基于注意力机制的特征融合
 - 特征融合的统一方式，以下均适用
