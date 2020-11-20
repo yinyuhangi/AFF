@@ -2,13 +2,13 @@ import torch
 import torch.nn as nn
 
 
-class DirectAddFuse(nn.Module):
+class DAF(nn.Module):
     '''
-    直接相加
+    直接相加 DirectAddFuse
     '''
 
     def __init__(self):
-        super(DirectAddFuse, self).__init__()
+        super(DAF, self).__init__()
 
     def forward(self, x, residual):
         return x + residual
@@ -42,7 +42,6 @@ class iAFF(nn.Module):
             nn.BatchNorm2d(channels),
         )
 
-
         # 第二次本地注意力
         self.local_att2 = nn.Sequential(
             nn.Conv2d(channels, inter_channels, kernel_size=1, stride=1, padding=0),
@@ -69,14 +68,15 @@ class iAFF(nn.Module):
         xg = self.global_att(xa)
         xlg = xl + xg
         wei = self.sigmoid(xlg)
-        xi=x*wei+residual*(1-wei)
+        xi = x * wei + residual * (1 - wei)
 
-        xl2=self.local_att2(xi)
-        xg2=self.global_att(xi)
-        xlg2=xl2+xg2
-        wei2=self.sigmoid(xlg2)
-        xo=x*wei2+residual*(1-wei2)
+        xl2 = self.local_att2(xi)
+        xg2 = self.global_att(xi)
+        xlg2 = xl2 + xg2
+        wei2 = self.sigmoid(xlg2)
+        xo = x * wei2 + residual * (1 - wei2)
         return xo
+
 
 class AFF(nn.Module):
     '''
@@ -116,15 +116,15 @@ class AFF(nn.Module):
         xo = 2 * x * wei + 2 * residual * (1 - wei)
         return xo
 
-if __name__ == '__main__':
-    import os
-    os.environ['CUDA_VISIBLE_DEVICES'] = "0"
-    device = torch.device("cuda:0")
-
-    x, residual= torch.ones(8,64, 32, 32).to(device),torch.ones(8,64, 32, 32).to(device)
-    channels=x.shape[1]
-
-    model=AFF(channels=channels)
-    model=model.to(device).train()
-    output = model(x, residual)
-    print(output.shape)
+# if __name__ == '__main__':
+#     import os
+#     os.environ['CUDA_VISIBLE_DEVICES'] = "0"
+#     device = torch.device("cuda:0")
+#
+#     x, residual= torch.ones(8,64, 32, 32).to(device),torch.ones(8,64, 32, 32).to(device)
+#     channels=x.shape[1]
+#
+#     model=AFF(channels=channels)
+#     model=model.to(device).train()
+#     output = model(x, residual)
+#     print(output.shape)
