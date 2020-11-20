@@ -5,7 +5,10 @@
 - 基于注意力机制的特征融合
 - 特征融合的统一方式，以下均适用
     > (a)Same Layer  (b)Short Skip    (c)Long Skip
-![](https://github.com/bobo0810/AFF/blob/main/imgs/app.png)
+
+<div align="center">
+<img src="https://github.com/bobo0810/AFF/blob/main/imgs/app.png" width="420px"  height="380px" alt="" >
+</div>
 
 
 ## 说明
