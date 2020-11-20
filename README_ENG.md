@@ -12,12 +12,21 @@
 
 ## Description
 - Modified based on Pytorch official ResNet.
-- Support AFFResNet,AFFResNeXt,etc.
-- Support AFF,iAFF fusion operation.
+- Support AFFResNet, AFFResNeXt,etc.
+- Support MS_CAM, AFF, iAFF fusion operation.
 
 ## Use
 
-### AFF/iAFF
+### Single feature channel weighting
+```python
+from fusion import MS_CAM
+# x[B,C,H,W]  like SE Module
+fusion_mode = MS_CAM(channels=C)
+x = fusion_mode(x)
+```
+
+
+### Multi-feature fusion
 ```python
 from fusion import AFF, iAFF
 # x,residual  [B,C,H,W]
@@ -34,7 +43,7 @@ x = fusion_mode(x, residual)
 | **Argument**    | **Description** |
 | :-------------- | :-------------- |
 | `fuse_type` (str,default: DAF) | support AFF,iAFF,DAF |
-| `small_input` (bool,default: False) | WH<=112:True |
+| `small_input` (bool,default: False) | img w,h<=112:True |
 
 
 ```python

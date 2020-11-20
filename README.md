@@ -15,12 +15,21 @@
 
 ## 说明
 - 非官方
-- 2020.11.20 支持AFFResNet / AFFResNeXt等网络
-- 2020.11.19 新增AFF / iAFF 融合操作
+- 2020.11.20 支持AFFResNet, AFFResNeXt
+- 2020.11.19 新增MS_CAM, AFF, iAFF 
 
 ## 使用
 
-### AFF/iAFF
+### 单特征通道加权
+```python
+from fusion import MS_CAM
+# x[B,C,H,W]  like SE Module
+fusion_mode = MS_CAM(channels=C)
+x = fusion_mode(x)
+```
+
+
+### 多特征融合 AFF, iAFF
 ```python
 from fusion import AFF, iAFF
 # x,residual  [B,C,H,W]
